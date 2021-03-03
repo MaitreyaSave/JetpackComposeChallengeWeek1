@@ -21,7 +21,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -57,23 +65,24 @@ val puppyList = mutableListOf<Puppy>()
 
 @Composable
 fun MyApp() {
-    val openDialog = remember { mutableStateOf(false)  }
+    val openDialog = remember { mutableStateOf(false) }
     val clickedPuppy = remember { mutableStateOf(puppyList.get(0)) }
     Surface(color = MaterialTheme.colors.background) {
-        Column(modifier = Modifier
-            .fillMaxWidth(),
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(
                 text = "Today's top " + puppyList.size + " puppies",
                 style = TextStyle(fontSize = 24.sp),
                 modifier = Modifier
                     .padding(10.dp)
             )
-            if(openDialog.value){
+            if (openDialog.value) {
                 PuppyDetails(clickedPuppy.value, openDialog)
-            }
-            else {
+            } else {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -103,9 +112,9 @@ fun DarkPreview() {
     }
 }
 
-data class Puppy (val name:String){
-    lateinit var color:String
-    lateinit var breed:String
+data class Puppy(val name: String) {
+    lateinit var color: String
+    lateinit var breed: String
     var age_month = 0
     var image = 0
 }
@@ -118,10 +127,12 @@ fun PuppyList(puppies: List<Puppy>, showPuppyDetails: MutableState<Boolean>, cli
                 .height(50.dp)
                 .padding(4.dp)
                 .background(Color(R.color.purple_500))
-                .clickable(onClick = {
-                    showPuppyDetails.value = true
-                    clickedPuppy.value = puppy
-                }),
+                .clickable(
+                    onClick = {
+                        showPuppyDetails.value = true
+                        clickedPuppy.value = puppy
+                    }
+                ),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -157,25 +168,23 @@ fun PuppyDetails(puppy: Puppy, showPuppyDetails: MutableState<Boolean>) {
             .height(200.dp)
             .padding(5.dp)
     )
-    Text(text = "Name: "+puppy.name, modifier = Modifier.padding(4.dp))
-    Text("Breed: "+puppy.breed, modifier = Modifier.padding(4.dp))
-    Text("Color: "+puppy.color, modifier = Modifier.padding(4.dp))
-    Text("Age: "+puppy.age_month + " months", modifier = Modifier.padding(4.dp))
-    
+    Text(text = "Name: " + puppy.name, modifier = Modifier.padding(4.dp))
+    Text("Breed: " + puppy.breed, modifier = Modifier.padding(4.dp))
+    Text("Color: " + puppy.color, modifier = Modifier.padding(4.dp))
+    Text("Age: " + puppy.age_month + " months", modifier = Modifier.padding(4.dp))
+
     Button(onClick = { showPuppyDetails.value = false }, modifier = Modifier.padding(24.dp)) {
         Text(text = "Back")
     }
 }
 
-
-fun initializeListOfPuppies(size:Int){
+fun initializeListOfPuppies(size: Int) {
     val namesList = mutableListOf<String>("Apple", "Beer", "Cider", "Donut", "Eggy", "Falcon", "Gazza", "Hercules", "Ink", "Johnny", "Kotlin", "Luna", "Neon", "Magnolia", "Opal", "Pikachu", "Quartz", "Reggie", "Stella", "Tuffy", "Umbra", "Venice", "Wally", "Xylo", "Yappy", "Zeno")
     val breedsList = listOf<String>("German Shepherd", "Rottweiler", "Pug", "Chihuahua", "Hound", "Labrador", "Terrier", "Golden Retriever", "Beagle", "Pit bull", "Great Dane", "Husky")
     val colorList = listOf<String>("Black", "Brown", "White", "Brown-White", "Black-White", "Black-Brown", "Blonde", "Red")
-    val ageMonthList = listOf<Int>(1,2,3,4,5,6,7,8,9,10,11,12)
+    val ageMonthList = listOf<Int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
 
-    val drawablePath = R.drawable.p1
-    for (i in 1..size){
+    for (i in 1..size) {
         val puppyName = namesList.random()
         namesList.remove(puppyName)
         val puppy = Puppy(puppyName)
@@ -187,7 +196,7 @@ fun initializeListOfPuppies(size:Int){
         puppyList.add(puppy)
     }
 }
-enum class PicDrawable (val drawable: Int){
+enum class PicDrawable(val drawable: Int) {
     P1(R.drawable.p1),
     P2(R.drawable.p2),
     P3(R.drawable.p3),
